@@ -7,6 +7,7 @@ import { GetAllPossiblePaths, GetFastestPath, ClearPathList } from '../functions
 
 import CheckpointCard from '../components/CheckpointCard'
 import SearchInput from '../components/SearchInput';
+import Popup from '../components/Popup';
 
 const HomeScreen = ({ navigation }) => {
     const [update, setUpdate] = useState(false)
@@ -21,7 +22,7 @@ const HomeScreen = ({ navigation }) => {
 
     const [checkpoints, setCheckpoints] = useState([]);
 
-    const [popup, setPopup] = useState(false);
+    const [popup, setPopup] = useState('');
 
     // CRUD Checkpoints
     const CreateCheckpoint = () => {
@@ -114,10 +115,10 @@ const HomeScreen = ({ navigation }) => {
         ClearPathList()
     }
 
-    const HandlePopup = () => {
-        setPopup(true)
+    const HandlePopup = (text) => {
+        setPopup(text)
         setTimeout(() => {
-            setPopup(false)
+            setPopup('')
         }, 1000);
     }
 
@@ -143,18 +144,6 @@ const HomeScreen = ({ navigation }) => {
                                 handlePopup={HandlePopup}
                             />}
                         keyExtractor={(item, index) => index.toString()}
-                    />
-                </View>
-            }
-            {
-                popup &&
-                <View style={{ position: "absolute", bottom: "20%" }}>
-                    <FAB
-                        style={{ backgroundColor: '#eee' }}
-                        label='COPIÉ !'
-                        disabled
-                        small
-                        color='black'
                     />
                 </View>
             }
@@ -194,6 +183,8 @@ const HomeScreen = ({ navigation }) => {
                     }}
                 />
             </View>
+
+            {popup !== '' && <Popup text={popup} />}
         </View>
     );
 }
