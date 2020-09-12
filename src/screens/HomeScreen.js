@@ -27,11 +27,11 @@ const HomeScreen = ({ navigation }) => {
     // CRUD Checkpoints
     const CreateCheckpoint = () => {
         if (text == "") {
-            console.log("Enter address")
+            HandlePopup("Entre une adresse")
             return;
         }
         if (coordinates && coordinates.length == 0) {
-            console.log("Address not found")
+            HandlePopup("Adresse non trouvée")
             return;
         }
 
