@@ -35,7 +35,8 @@ export const Styles = StyleSheet.create({
     },
     checkpointsList: {
         marginVertical: 65,
-        width: "100%"
+        width: "100%",
+        maxHeight: '70%'
     },
     checkpointCard: {
         backgroundColor: Colors.white,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {  View, ScrollView, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { TextInput, IconButton } from 'react-native-paper'
 import { GoogleAutoComplete } from 'react-native-google-autocomplete'
 
@@ -26,7 +26,6 @@ const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint
         callback()
     }
     return (
-        <View style={Styles.container}>
             <GoogleAutoComplete apiKey={API_KEY} debounce={500} minLength={3} components="country:fr">
                 {({ handleTextChange, locationResults, fetchDetails, clearSearch }) => (
                     <React.Fragment>
@@ -42,14 +41,14 @@ const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint
                                     null
                             }
 
-                            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                <TextInput
-                                    style={[Styles.searchInput, {width:(buttons ? 300 : 250), fontSize: (buttons ? 13 : 10)}]}
-                                    value={text}
-                                    onChangeText={text => textChange(handleTextChange, text, clearSearch)}
-                                    placeholder="Location..."
-                                />
-                            </View>
+
+                            <TextInput
+                                style={[Styles.searchInput, { width: (buttons ? 300 : 250), fontSize: (buttons ? 13 : 10) }]}
+                                value={text}
+                                onChangeText={text => textChange(handleTextChange, text, clearSearch)}
+                                placeholder="Location..."
+                            />
+
 
                             {
                                 buttons ?
@@ -79,7 +78,6 @@ const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint
                     </React.Fragment>
                 )}
             </GoogleAutoComplete>
-        </View>
     )
 }
 

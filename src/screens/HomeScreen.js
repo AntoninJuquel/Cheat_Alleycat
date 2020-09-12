@@ -146,7 +146,6 @@ const HomeScreen = ({ navigation }) => {
                     />
                 </View>
             }
-
             {
                 popup &&
                 <View style={{ position: "absolute", bottom: "20%" }}>
@@ -160,7 +159,7 @@ const HomeScreen = ({ navigation }) => {
                 </View>
             }
 
-            <View style={[Styles.container, Styles.row, Styles.header]}>
+            <View style={[Styles.container, Styles.header]}>
                 <SearchInput
                     text={text}
                     setText={setText}
