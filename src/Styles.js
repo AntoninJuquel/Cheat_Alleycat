@@ -45,8 +45,18 @@ export const Styles = StyleSheet.create({
         borderWidth: 1,
         marginVertical: 8,
         marginHorizontal: 16,
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+
+        elevation: 12,
     },
-    center:{
+    center: {
         alignItems: 'center',
         justifyContent: 'center',
     },

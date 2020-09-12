@@ -128,6 +128,7 @@ const HomeScreen = ({ navigation }) => {
                 number > 0 &&
                 <View style={Styles.checkpointsList}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
                         data={checkpoints}
                         renderItem={({ item, index }) =>
                             <CheckpointCard
