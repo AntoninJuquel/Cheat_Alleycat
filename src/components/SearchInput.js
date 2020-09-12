@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
-import { TextInput, IconButton } from 'react-native-paper'
+import { TextInput, IconButton, Text } from 'react-native-paper'
 import { GoogleAutoComplete } from 'react-native-google-autocomplete'
-
-import ProposalItem from './ProposalItem'
 
 import { API_KEY } from '../../key'
 import { Styles } from '../Styles'
@@ -80,6 +78,14 @@ const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint
                 </React.Fragment>
             )}
         </GoogleAutoComplete>
+    )
+}
+
+const ProposalItem = ({ handlePress, fetchDetails, description, place_id, clearSearch }) => {
+    return (
+        <TouchableOpacity style={Styles.result} onPress={() => handlePress(place_id, fetchDetails, clearSearch)}>
+            <Text>{description}</Text>
+        </TouchableOpacity>
     )
 }
 
