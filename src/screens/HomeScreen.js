@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation }) => {
 
     const GetStart = (index) => {
         if (index < 0) {
-            console.log("WTF")
+            HandlePopup("WTF")
             return
         }
         setStart(checkpoints[index])
@@ -82,7 +82,7 @@ const HomeScreen = ({ navigation }) => {
 
     const GetEnd = (index) => {
         if (index > number) {
-            console.log("You need checkpoints !")
+            HandlePopup("Ajoute des checkpoints !")
             return
         }
         setEnd(checkpoints[index])
@@ -90,22 +90,22 @@ const HomeScreen = ({ navigation }) => {
 
     const FindBestPath = () => {
         if (number == 0) {
-            console.log("Add checkpoints !")
+            HandlePopup("Ajoute des checkpoints !")
             return;
         }
 
         if (start && start.length == 0) {
-            console.log("Choose start first !")
+            HandlePopup("Choisis un départ !")
             return;
         }
 
         if (end && end.length == 0) {
-            console.log("Choose end first !")
+            HandlePopup("Choisis une arrivée !")
             return;
         }
 
         if (start == end) {
-            console.log("need diffrent start from end")
+            HandlePopup("Le départ doit être différent de l'arrivée !")
             return;
         }
 
