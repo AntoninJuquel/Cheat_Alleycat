@@ -5,7 +5,7 @@ import { Styles } from '../Styles'
 
 const ProposalItem = ({ handlePress, fetchDetails, description, place_id, clearSearch }) => {
     return (
-        <TouchableOpacity style={Styles.result} onPress={() => handlePress(place_id, fetchDetails, description, clearSearch)}>
+        <TouchableOpacity style={Styles.result} onPress={() => handlePress(place_id, fetchDetails, clearSearch)}>
             <Text>{description}</Text>
         </TouchableOpacity>
     )
