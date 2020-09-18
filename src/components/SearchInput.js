@@ -4,7 +4,7 @@ import { TextInput, IconButton, Text } from 'react-native-paper'
 import { GoogleAutoComplete } from 'react-native-google-autocomplete'
 
 import { API_KEY } from '../../key'
-import { Styles } from '../Styles'
+import { Colors, Styles } from '../Styles'
 
 const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint, buttons }) => {
 
@@ -31,9 +31,10 @@ const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint
                         {
                             buttons ?
                                 <IconButton
-                                    icon="close-box-outline"
-                                    size={20}
+                                    icon="close-circle-outline"
+                                    size={30}
                                     onPress={() => { clearSearch(); setText("") }}
+                                    color={Colors.iconColor}
                                 />
                                 :
                                 null
@@ -41,19 +42,24 @@ const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint
 
 
                         <TextInput
+                        mode='outlined'
                             style={[Styles.searchInput, { width: (buttons ? 300 : 250), fontSize: (buttons ? 13 : 10) }]}
                             value={text}
                             onChangeText={text => textChange(handleTextChange, text, clearSearch)}
                             placeholder="Location..."
+                            underlineColor={Colors.foregroundColor}
+                            selectionColor={Colors.foregroundColor}
+                            underlineColorAndroid={Colors.foregroundColor}
                         />
 
 
                         {
                             buttons ?
                                 <IconButton
-                                    icon="plus-box-outline"
-                                    size={20}
+                                    icon="plus-circle-outline"
+                                    size={30}
                                     onPress={addCheckpoint}
+                                    color={Colors.iconColor}
                                 />
                                 :
                                 null
@@ -84,7 +90,7 @@ const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint
 const ProposalItem = ({ handlePress, fetchDetails, description, place_id, clearSearch }) => {
     return (
         <TouchableOpacity style={Styles.result} onPress={() => handlePress(place_id, fetchDetails, clearSearch)}>
-            <Text>{description}</Text>
+            <Text style={{color: Colors.textColor}}>{description}</Text>
         </TouchableOpacity>
     )
 }

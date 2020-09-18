@@ -3,13 +3,14 @@ import { View } from 'react-native';
 import { FAB } from "react-native-paper";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
 
-import { Styles } from '../Styles';
+import { Colors, MapStyle, Styles } from '../Styles';
 
 const MapScreen = ({ route, navigation }) => {
     const { markers } = route.params
     return (
         <View style={Styles.container}>
             <MapView
+                customMapStyle={MapStyle}
                 provider={PROVIDER_GOOGLE}
                 style={Styles.map}
                 region={{
@@ -35,20 +36,20 @@ const MapScreen = ({ route, navigation }) => {
                             longitude: marker[1][1]
                         }
                     ))}
-                    strokeColor="#000"
+                    strokeColor={Colors.textColor}
                     strokeWidth={3}
                 />
 
             </MapView>
             <FAB
-                    style={{ position: "absolute", left: "5%",top: "5%", backgroundColor: 'red' }}
-                    icon="arrow-left"
-                    small
-                    color='white'
-                    onPress={() => {
-                        navigation.navigate("Home")
-                    }}
-                />
+                style={{ position: "absolute", left: "5%", top: "5%", backgroundColor: Colors.cancel }}
+                icon="arrow-left"
+                small
+                color={Colors.textColor}
+                onPress={() => {
+                    navigation.navigate("Home")
+                }}
+            />
         </View>
     )
 }

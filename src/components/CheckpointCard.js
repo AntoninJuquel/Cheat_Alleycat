@@ -39,20 +39,22 @@ const CheckpointCard = ({ index, title, x, y, end, start, handleDelete, handleEd
         setCompleted(!completed)
     }
     return (
-        <View style={[Styles.checkpointCard, Styles.row, { backgroundColor: (completed ? Colors.green : Colors.white) }]}>
+        <View style={[Styles.checkpointCard, Styles.row, { backgroundColor: (completed ? Colors.completedColor : Colors.foregroundColor) }]}>
 
             <View style={[Styles.center, Styles.row]}>
                 <Text style={Styles.checkpointText}>#{index + 1} </Text>
                 <View>
                     <IconButton
-                        icon={start ? "play" : "play-box-outline"}
+                        icon={start ? "play-circle" : "play-circle-outline"}
                         size={20}
                         onPress={EditStart}
+                        color={Colors.iconColor}
                     />
                     <IconButton
                         icon={end ? "flag" : "flag-checkered"}
                         size={20}
                         onPress={EditEnd}
+                        color={Colors.iconColor}
                     />
                 </View>
             </View>
@@ -85,11 +87,13 @@ const CheckpointCard = ({ index, title, x, y, end, start, handleDelete, handleEd
                     icon={edit ? "cancel" : "delete-outline"}
                     size={20}
                     onPress={edit ? CancelEdit : () => handleDelete(index)}
+                    color={Colors.iconColor}
                 />
                 <IconButton
-                    icon={edit ? "checkbox-marked-outline" : "square-edit-outline"}
+                    icon={edit ? "checkbox-marked-circle-outline" : "circle-edit-outline"}
                     size={20}
                     onPress={edit ? ConfirmEdit : StartEdit}
+                    color={Colors.iconColor}
                 />
             </View>
         </View>

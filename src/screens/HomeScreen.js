@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, FlatList, Linking } from 'react-native';
 import { FAB } from "react-native-paper";
 
-import { Styles } from '../Styles';
+import { Colors, Styles } from '../Styles';
 import { GetAllPossiblePaths, GetFastestPath, ClearPathList } from '../functions/PathFindind'
 
 import CheckpointCard from '../components/CheckpointCard'
@@ -162,21 +162,22 @@ const HomeScreen = ({ navigation }) => {
 
             <View style={[Styles.container, Styles.row, Styles.footer]}>
                 <FAB
-                    style={{ position: "absolute", left: "5%", backgroundColor: 'red' }}
+                    style={{ position: "absolute", left: "5%", backgroundColor: Colors.cancel }}
                     icon="close"
                     small
                     onPress={ResetCheckpoints}
+                    color={Colors.textColor}
                 />
                 <FAB
-                    style={{ backgroundColor: 'green' }}
+                    style={{ backgroundColor: Colors.confirm }}
                     icon="check"
                     onPress={FindBestPath}
                 />
                 <FAB
-                    style={{ position: "absolute", right: "5%", backgroundColor: 'skyblue' }}
+                    style={{ position: "absolute", right: "5%", backgroundColor: Colors.map  }}
                     icon="arrow-right"
                     small
-                    color='white'
+                    color={Colors.textColor}
                     onPress={() => {
                         navigation.navigate("Map", {
                             markers: checkpoints

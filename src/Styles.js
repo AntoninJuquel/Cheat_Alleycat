@@ -1,28 +1,33 @@
 import { StyleSheet } from 'react-native';
 
 export const Colors = {
-    white: '#FFF',
-    red: '#FF0000',
-    green: '#00FF00',
-    blue: '#0000FF',
-    pink: '#f9c2ff'
+    cancel: '#d72323',
+    confirm: '#a3f7bf',
+    map: '#0a91ab',
+
+    backgroundColor: '#232931',
+    foregroundColor: '#393e46',
+    completedColor: '#834c69',
+    backgroundInputColor : '#dbd8e3',
+
+    iconColor: '#4ecca3',
+    textColor:'#eeeeee'
 }
 
 export const Styles = StyleSheet.create({
     // View
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.backgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
     },
     row: {
         flexDirection: 'row',
+        alignItems: "center"
     },
     input: {
         width: 250,
-        borderColor: 'gray',
-        borderWidth: 1
     },
     footer: {
         position: 'absolute',
@@ -39,22 +44,11 @@ export const Styles = StyleSheet.create({
         maxHeight: '70%'
     },
     checkpointCard: {
-        backgroundColor: Colors.white,
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderWidth: 1,
+
         marginVertical: 8,
         marginHorizontal: 16,
-
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 6,
-        },
-        shadowOpacity: 0.37,
-        shadowRadius: 7.49,
-
-        elevation: 12,
     },
     center: {
         alignItems: 'center',
@@ -62,12 +56,14 @@ export const Styles = StyleSheet.create({
     },
     // Text
     checkpointText: {
+        color: Colors.textColor,
         fontSize: 14,
     },
     result: {
         height: 40,
         borderBottomWidth: StyleSheet.hairlineWidth,
-        justifyContent: "center"
+        borderBottomColor: Colors.textColor,
+        justifyContent: "center",
     },
     map: {
         flex: 1,
@@ -80,7 +76,168 @@ export const Styles = StyleSheet.create({
     // Input
     searchInput: {
         height: 40,
-        borderWidth: 1,
         paddingHorizontal: 16,
+        backgroundColor: Colors.backgroundInputColor,
     },
 });
+export const MapStyle = [
+    {
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#242f3e"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#746855"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#242f3e"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.locality",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#d59563"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#d59563"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#263c3f"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#6b9a76"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#38414e"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#212a37"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9ca5b3"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#746855"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#1f2835"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#f3d19c"
+        }
+      ]
+    },
+    {
+      "featureType": "transit",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#2f3948"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.station",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#d59563"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#17263c"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#515c6d"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#17263c"
+        }
+      ]
+    }
+  ]
