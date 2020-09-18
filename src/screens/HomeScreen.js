@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, FlatList, Linking } from 'react-native';
-import { FAB } from "react-native-paper";
+import { Button, Dialog, FAB, Paragraph, Portal } from "react-native-paper";
 
 import { Colors, Styles } from '../Styles';
 import { GetAllPossiblePaths, GetFastestPath, ClearPathList } from '../functions/PathFindind'
@@ -23,6 +23,12 @@ const HomeScreen = ({ navigation }) => {
     const [checkpoints, setCheckpoints] = useState([]);
 
     const [popup, setPopup] = useState('');
+
+    const [dialogVisible, setDialogVisible] = React.useState(false);
+
+    const showDialog = () => setDialogVisible(true);
+
+    const hideDialog = () => setDialogVisible(false);
 
     // CRUD Checkpoints
     const CreateCheckpoint = () => {
@@ -68,6 +74,7 @@ const HomeScreen = ({ navigation }) => {
         setText("")
         setCoordinates([])
         setNumber(0)
+        hideDialog()
     }
 
     // Final setup functions
@@ -122,6 +129,8 @@ const HomeScreen = ({ navigation }) => {
         }, 1000);
     }
 
+
+
     return (
         <View style={Styles.container}>
             {
@@ -149,6 +158,19 @@ const HomeScreen = ({ navigation }) => {
                 </View>
             }
 
+            <Portal>
+                <Dialog visible={dialogVisible} onDismiss={hideDialog} style={{backgroundColor: Colors.foregroundColor}}>
+                    <Dialog.Title style={{color: Colors.textColor}}>ATTENTION</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={{color: Colors.textColor}}>Supprimer tous les checkpoints ?</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={hideDialog} color={Colors.iconColor}>Annuler</Button>
+                        <Button onPress={ResetCheckpoints} color={Colors.iconColor}>Confirmer</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+
             <View style={[Styles.container, Styles.header]}>
                 <SearchInput
                     text={text}
@@ -165,7 +187,7 @@ const HomeScreen = ({ navigation }) => {
                     style={{ position: "absolute", left: "5%", backgroundColor: Colors.cancel }}
                     icon="close"
                     small
-                    onPress={ResetCheckpoints}
+                    onPress={showDialog}
                     color={Colors.textColor}
                 />
                 <FAB
@@ -174,7 +196,7 @@ const HomeScreen = ({ navigation }) => {
                     onPress={FindBestPath}
                 />
                 <FAB
-                    style={{ position: "absolute", right: "5%", backgroundColor: Colors.map  }}
+                    style={{ position: "absolute", right: "5%", backgroundColor: Colors.map }}
                     icon="arrow-right"
                     small
                     color={Colors.textColor}
