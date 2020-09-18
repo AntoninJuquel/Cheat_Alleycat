@@ -207,8 +207,8 @@ const HomeScreen = ({ navigation }) => {
                     }}
                 />
             </View>
-
-            {popup !== '' && <Popup text={popup} />}
+            
+            <Popup visible={popup!=''} text={popup}/>
         </View>
     );
 }
