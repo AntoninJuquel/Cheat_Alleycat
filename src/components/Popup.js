@@ -3,15 +3,15 @@ import { View } from "react-native";
 import { FAB } from "react-native-paper";
 import { Colors } from "../Styles";
 
-const Popup = ({ text, visible }) => {
+const Popup = ({ style,text, visible }) => {
     return (
-        <View style={{ position: "absolute", bottom: "20%"}}>
+        <View style={style}>
             <FAB
-                style={{ backgroundColor: visible ? Colors.foreground : 'transparent'}}
+                style={{ backgroundColor: visible ? Colors.foreground : 'transparent' }}
                 label={text}
                 disabled
                 small
-                color={ visible ? Colors.text : 'transparent'}
+                color={visible ? Colors.text : 'transparent'}
             />
         </View>
     )

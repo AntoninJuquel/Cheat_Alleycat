@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { Button, Dialog, FAB, Paragraph, Portal } from "react-native-paper";
+import { Button, Dialog, Text, Paragraph, Portal, TouchableRipple } from "react-native-paper";
 
 import { Colors, Styles } from '../Styles';
 import { GetAllPossiblePaths, GetFastestPath, ClearPathList } from '../functions/PathFindind'
+import { useGlobalState } from "../providers/Checkpoints";
 
 import CheckpointCard from '../components/CheckpointCard'
 import SearchInput from '../components/SearchInput';
 import Popup from '../components/Popup';
-import { useGlobalState } from "../providers/Checkpoints";
+import MyButton from "../components/MyButton";
 
 const HomeScreen = ({ navigation, route }) => {
     const [update, setUpdate] = useState(false)
@@ -179,38 +180,18 @@ const HomeScreen = ({ navigation, route }) => {
                                 handlePopup={HandlePopup}
                             />}
                         keyExtractor={(item, index) => index.toString()}
-                        ItemSeparatorComponent={() => <View style={{height: 3}}></View>}
+                        ItemSeparatorComponent={() => <View style={{ height: 3 }}></View>}
                     />
                 }
             </View>
 
             <View style={Styles.footer}>
-                <FAB
-                    style={{ backgroundColor: Colors.cancel }}
-                    icon="close"
-                    small
-                    onPress={showDialog}
-                    color={Colors.text}
-                />
-                <FAB
-                    style={{ backgroundColor: Colors.confirm }}
-                    icon="check"
-                    onPress={FindBestPath}
-                />
-                <FAB
-                    style={{ backgroundColor: Colors.map }}
-                    icon="arrow-right"
-                    small
-                    color={Colors.text}
-                    onPress={() => {
-                        navigation.navigate("Map", {
-                            markers: state.checkpoints
-                        })
-                    }}
-                />
+                <MyButton style={{ flex: 1, height: '100%', backgroundColor: Colors.cancel, borderRadius: 5}} color={Colors.text} onPress={showDialog} text='ANNULER' />
+                <View style={{ flex: .1 }}></View>
+                <MyButton style={{ flex: 4, height: '100%', backgroundColor: Colors.icon, borderRadius: 5 }} onPress={FindBestPath} text='GO' />
             </View>
 
-            <Popup visible={popup != ''} text={popup} />
+            <Popup style={{ position: "absolute", bottom: "20%",left:50,right:50 }} visible={popup != ''} text={popup} />
         </View>
     );
 }

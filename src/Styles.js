@@ -26,10 +26,10 @@ export const Styles = StyleSheet.create({
     width: '100%'
   },
   checkpointsList: {
-    maxHeight: '82.5%', 
-    width: '100%', 
+    maxHeight: '80%',
+    width: '100%',
     paddingHorizontal: 10
-  },
+},
   checkpointCard: {
     alignItems:'center',
     flexDirection: "row", 
@@ -37,15 +37,15 @@ export const Styles = StyleSheet.create({
     backgroundColor: Colors.foreground
   },
   footer: {
-    padding: 5,
-    justifyContent: "space-between",
+    height: 60,
     alignItems: 'center',
     flexDirection: 'row',
     bottom: 0,
     position: 'absolute',
     width: '100%',
-    backgroundColor: Colors.background
-  },
+    backgroundColor: Colors.background,
+    padding: 5,
+},
   separator:{ 
     height: 1, 
     backgroundColor: Colors.text, 
