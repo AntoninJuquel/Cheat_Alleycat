@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, FlatList } from 'react-native';
 import { TextInput, IconButton, Text } from 'react-native-paper'
 import { GoogleAutoComplete } from 'react-native-google-autocomplete'
 
@@ -24,62 +24,65 @@ const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint
         callback()
     }
     return (
-        <GoogleAutoComplete apiKey={API_KEY} debounce={500} minLength={3} components="country:fr">
+        <GoogleAutoComplete apiKey={API_KEY} debounce={300} minLength={2} components="country:fr">
             {({ handleTextChange, locationResults, fetchDetails, clearSearch }) => (
                 <React.Fragment>
-                    <View style={Styles.row}>
-                        {
-                            buttons ?
-                                <IconButton
-                                    icon="close-circle-outline"
-                                    size={30}
-                                    onPress={() => { clearSearch(); setText("") }}
-                                    color={Colors.iconColor}
-                                />
-                                :
-                                null
-                        }
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                            {
+                                buttons ?
+                                    <IconButton
+                                        icon="close-circle-outline"
+                                        size={30}
+                                        onPress={() => { clearSearch(); setText("") }}
+                                        color={Colors.icon}
+                                        style={{ flex: .25 }}
+                                    />
+                                    :
+                                    null
+                            }
 
+                            <TextInput
+                                mode='outlined'
+                                style={{ flex: 2.5, height: 40,fontSize: (buttons ? 13 : 10), backgroundColor: Colors.backgroundInput }}
+                                value={text}
+                                onChangeText={text => textChange(handleTextChange, text, clearSearch)}
+                                placeholder="Adresse..."
+                                underlineColor={Colors.foreground}
+                                selectionColor={Colors.foreground}
+                                underlineColorAndroid={Colors.foreground}
+                            />
 
-                        <TextInput
-                        mode='outlined'
-                            style={[Styles.searchInput, { width: (buttons ? 300 : 250), fontSize: (buttons ? 13 : 10) }]}
-                            value={text}
-                            onChangeText={text => textChange(handleTextChange, text, clearSearch)}
-                            placeholder="Location..."
-                            underlineColor={Colors.foregroundColor}
-                            selectionColor={Colors.foregroundColor}
-                            underlineColorAndroid={Colors.foregroundColor}
-                        />
+                            {
+                                buttons ?
+                                    <IconButton
+                                        icon="plus-circle-outline"
+                                        size={30}
+                                        onPress={addCheckpoint}
+                                        color={Colors.icon}
+                                        style={{ flex: .25 }}
+                                    />
+                                    :
+                                    null
+                            }
+                        </View>
 
-
-                        {
-                            buttons ?
-                                <IconButton
-                                    icon="plus-circle-outline"
-                                    size={30}
-                                    onPress={addCheckpoint}
-                                    color={Colors.iconColor}
-                                />
-                                :
-                                null
-                        }
+                        <View style={{ height: (locationResults.length > 0 ? 200 : 0), width: 315}}>
+                            <FlatList
+                                keyExtractor={(item, index) => index.toString()}
+                                data={locationResults}
+                                renderItem={({ item, index }) => (
+                                    <ProposalItem
+                                        {...item}
+                                        fetchDetails={fetchDetails}
+                                        handlePress={handlePress}
+                                        clearSearch={clearSearch}
+                                    />
+                                )}
+                                ItemSeparatorComponent={() => <View style={Styles.separator}></View>}
+                            />
+                        </View>
                     </View>
-
-                    <ScrollView style={{ maxHeight: 200 }}>
-                        {locationResults.map((el, i) =>
-                            (
-                                <ProposalItem
-                                    {...el}
-                                    fetchDetails={fetchDetails}
-                                    handlePress={handlePress}
-                                    clearSearch={clearSearch}
-                                    key={String(i)}
-                                />
-                            )
-                        )}
-                    </ScrollView>
-
 
                 </React.Fragment>
             )}
@@ -89,8 +92,8 @@ const SearchInput = ({ text, setText, coordinates, setCoordinates, addCheckpoint
 
 const ProposalItem = ({ handlePress, fetchDetails, description, place_id, clearSearch }) => {
     return (
-        <TouchableOpacity style={Styles.result} onPress={() => handlePress(place_id, fetchDetails, clearSearch)}>
-            <Text style={{color: Colors.textColor}}>{description}</Text>
+        <TouchableOpacity onPress={() => handlePress(place_id, fetchDetails, clearSearch)}>
+            <Text style={{ color: Colors.text }}>{description}</Text>
         </TouchableOpacity>
     )
 }

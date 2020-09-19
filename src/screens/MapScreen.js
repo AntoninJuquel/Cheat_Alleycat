@@ -4,9 +4,11 @@ import { FAB } from "react-native-paper";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import { Colors, MapStyle, Styles } from '../Styles';
+import { useGlobalState } from "../providers/Checkpoints";
 
-const MapScreen = ({ route, navigation }) => {
-    const { markers } = route.params
+const MapScreen = ({ navigation }) => {
+    const [state, dispatch] = useGlobalState();
+
     return (
         <View style={Styles.container}>
             <MapView
@@ -21,35 +23,26 @@ const MapScreen = ({ route, navigation }) => {
                 }}
             >
                 {
-                    markers.map(marker => (
+                    state.checkpoints.map((marker,i) => (
                         <Marker
-                            key={marker[0]}
+                            key={String(i)}
                             coordinate={{ latitude: marker[1][0], longitude: marker[1][1] }}
                             title={marker[0]}
                         />
                     ))
                 }
                 <Polyline
-                    coordinates={markers.map(marker => (
+                    coordinates={state.checkpoints.map(marker => (
                         {
                             latitude: marker[1][0],
                             longitude: marker[1][1]
                         }
                     ))}
-                    strokeColor={Colors.textColor}
+                    strokeColor={Colors.text}
                     strokeWidth={3}
                 />
 
             </MapView>
-            <FAB
-                style={{ position: "absolute", left: "5%", top: "5%", backgroundColor: Colors.cancel }}
-                icon="arrow-left"
-                small
-                color={Colors.textColor}
-                onPress={() => {
-                    navigation.navigate("Home")
-                }}
-            />
         </View>
     )
 }

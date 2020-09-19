@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, FlatList, Linking } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { Button, Dialog, FAB, Paragraph, Portal } from "react-native-paper";
 
 import { Colors, Styles } from '../Styles';
@@ -8,8 +8,9 @@ import { GetAllPossiblePaths, GetFastestPath, ClearPathList } from '../functions
 import CheckpointCard from '../components/CheckpointCard'
 import SearchInput from '../components/SearchInput';
 import Popup from '../components/Popup';
+import { useGlobalState } from "../providers/Checkpoints";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, route }) => {
     const [update, setUpdate] = useState(false)
 
     const [text, setText] = useState('');
@@ -20,7 +21,7 @@ const HomeScreen = ({ navigation }) => {
     const [start, setStart] = useState([]);
     const [end, setEnd] = useState([]);
 
-    const [checkpoints, setCheckpoints] = useState([]);
+    const [state, dispatch] = useGlobalState();
 
     const [popup, setPopup] = useState('');
 
@@ -41,34 +42,34 @@ const HomeScreen = ({ navigation }) => {
             return;
         }
 
-        const clone = checkpoints.slice()
+        const clone = state.checkpoints.slice()
         const newList = clone;
 
         newList.push([text, coordinates])
 
-        setCheckpoints(newList)
+        dispatch({ checkpoints: newList })
         setNumber(newList.length)
         setText("")
         setCoordinates([])
     }
     const UpdateCheckpoint = (index, value, coordinates) => {
-        const clone = checkpoints.slice()
+        const clone = state.checkpoints.slice()
         const newList = clone;
         newList[index] = [value, coordinates]
-        setCheckpoints(newList)
+        dispatch({ checkpoints: newList })
         setNumber(newList.length)
         setUpdate(!update)
     }
     const DeleteCheckpoint = (index) => {
-        const clone = checkpoints.slice()
+        const clone = state.checkpoints.slice()
         const newList = clone;
         newList.splice(index, 1)
-        setCheckpoints(newList)
+        dispatch({ checkpoints: newList })
         setNumber(newList.length)
     }
     const ResetCheckpoints = () => {
         ClearPathList()
-        setCheckpoints([])
+        dispatch({ checkpoints: [] })
         setEnd([])
         setStart([])
         setText("")
@@ -84,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
             HandlePopup("WTF")
             return
         }
-        setStart(checkpoints[index])
+        setStart(state.checkpoints[index])
     }
 
     const GetEnd = (index) => {
@@ -92,7 +93,7 @@ const HomeScreen = ({ navigation }) => {
             HandlePopup("Ajoute des checkpoints !")
             return
         }
-        setEnd(checkpoints[index])
+        setEnd(state.checkpoints[index])
     }
 
     const FindBestPath = () => {
@@ -117,8 +118,8 @@ const HomeScreen = ({ navigation }) => {
         }
 
 
-        GetAllPossiblePaths(checkpoints, start, end)
-        setCheckpoints(GetFastestPath())
+        GetAllPossiblePaths(state.checkpoints, start, end)
+        dispatch({ checkpoints: GetFastestPath() })
         ClearPathList()
     }
 
@@ -133,12 +134,36 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={Styles.container}>
-            {
-                number > 0 &&
-                <View style={Styles.checkpointsList}>
+            <Portal>
+                <Dialog visible={dialogVisible} onDismiss={hideDialog} style={{ backgroundColor: Colors.foreground }}>
+                    <Dialog.Title style={{ color: Colors.text }}>ATTENTION</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={{ color: Colors.text }}>Supprimer tous les checkpoints ?</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={hideDialog} color={Colors.icon}>Annuler</Button>
+                        <Button onPress={ResetCheckpoints} color={Colors.icon}>Confirmer</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+
+            <View style={Styles.header}>
+                <SearchInput
+                    text={text}
+                    setText={setText}
+                    coordinates={coordinates}
+                    setCoordinates={setCoordinates}
+                    addCheckpoint={CreateCheckpoint}
+                    buttons={true}
+                />
+            </View>
+
+            <View style={Styles.checkpointsList}>
+                {
+                    number > 0 &&
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={checkpoints}
+                        data={state.checkpoints}
                         renderItem={({ item, index }) =>
                             <CheckpointCard
                                 index={index}
@@ -154,41 +179,18 @@ const HomeScreen = ({ navigation }) => {
                                 handlePopup={HandlePopup}
                             />}
                         keyExtractor={(item, index) => index.toString()}
+                        ItemSeparatorComponent={() => <View style={{height: 3}}></View>}
                     />
-                </View>
-            }
-
-            <Portal>
-                <Dialog visible={dialogVisible} onDismiss={hideDialog} style={{backgroundColor: Colors.foregroundColor}}>
-                    <Dialog.Title style={{color: Colors.textColor}}>ATTENTION</Dialog.Title>
-                    <Dialog.Content>
-                        <Paragraph style={{color: Colors.textColor}}>Supprimer tous les checkpoints ?</Paragraph>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button onPress={hideDialog} color={Colors.iconColor}>Annuler</Button>
-                        <Button onPress={ResetCheckpoints} color={Colors.iconColor}>Confirmer</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
-
-            <View style={[Styles.container, Styles.header]}>
-                <SearchInput
-                    text={text}
-                    setText={setText}
-                    coordinates={coordinates}
-                    setCoordinates={setCoordinates}
-                    addCheckpoint={CreateCheckpoint}
-                    buttons={true}
-                />
+                }
             </View>
 
-            <View style={[Styles.container, Styles.row, Styles.footer]}>
+            <View style={Styles.footer}>
                 <FAB
-                    style={{ position: "absolute", left: "5%", backgroundColor: Colors.cancel }}
+                    style={{ backgroundColor: Colors.cancel }}
                     icon="close"
                     small
                     onPress={showDialog}
-                    color={Colors.textColor}
+                    color={Colors.text}
                 />
                 <FAB
                     style={{ backgroundColor: Colors.confirm }}
@@ -196,19 +198,19 @@ const HomeScreen = ({ navigation }) => {
                     onPress={FindBestPath}
                 />
                 <FAB
-                    style={{ position: "absolute", right: "5%", backgroundColor: Colors.map }}
+                    style={{ backgroundColor: Colors.map }}
                     icon="arrow-right"
                     small
-                    color={Colors.textColor}
+                    color={Colors.text}
                     onPress={() => {
                         navigation.navigate("Map", {
-                            markers: checkpoints
+                            markers: state.checkpoints
                         })
                     }}
                 />
             </View>
-            
-            <Popup visible={popup!=''} text={popup}/>
+
+            <Popup visible={popup != ''} text={popup} />
         </View>
     );
 }

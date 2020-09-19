@@ -3,28 +3,15 @@ import { StatusBar } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
-// Screens
-import HomeScreen from './src/screens/HomeScreen';
-import MapScreen from './src/screens/MapScreen';
 import { Colors } from './src/Styles';
-
-const Stack = createStackNavigator();
-
-const StackNavigator = () => {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Map" component={MapScreen} />
-    </Stack.Navigator>
-  )
-}
+import StackNavigator from './src/screens/index';
+import { Provider as CheckpointsProvider } from './src/providers/Checkpoints';
 
 const App = () => {
   return (
     <>
-      <StatusBar backgroundColor={Colors.backgroundColor} barStyle='light-content' />
+      <StatusBar backgroundColor={Colors.foreground} barStyle='light-content' />
       <NavigationContainer>
         {StackNavigator()}
       </NavigationContainer>
@@ -34,8 +21,10 @@ const App = () => {
 
 export default () => {
   return (
-    <PaperProvider>
-      <App />
-    </PaperProvider>
+    <CheckpointsProvider>
+      <PaperProvider>
+        <App />
+      </PaperProvider>
+    </CheckpointsProvider>
   );
 };

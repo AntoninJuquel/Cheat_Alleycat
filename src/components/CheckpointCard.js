@@ -39,27 +39,24 @@ const CheckpointCard = ({ index, title, x, y, end, start, handleDelete, handleEd
         setCompleted(!completed)
     }
     return (
-        <View style={[Styles.checkpointCard, Styles.row, { backgroundColor: (completed ? Colors.completedColor : Colors.foregroundColor) }]}>
+        <View style={[Styles.checkpointCard,{borderColor: (completed ?  Colors.icon : 'transparent')}]}>
 
-            <View style={[Styles.center, Styles.row]}>
-                <Text style={Styles.checkpointText}>#{index + 1} </Text>
-                <View>
+                <View style={{flex: .5}}>
                     <IconButton
                         icon={start ? "play-circle" : "play-circle-outline"}
                         size={20}
                         onPress={EditStart}
-                        color={Colors.iconColor}
+                        color={Colors.icon}
                     />
                     <IconButton
                         icon={end ? "flag" : "flag-checkered"}
                         size={20}
                         onPress={EditEnd}
-                        color={Colors.iconColor}
+                        color={Colors.icon}
                     />
                 </View>
-            </View>
 
-            <View>
+            <View style={{flex: 2}}>
                 {
                     edit ?
                         <View>
@@ -82,18 +79,18 @@ const CheckpointCard = ({ index, title, x, y, end, start, handleDelete, handleEd
                 }
             </View>
 
-            <View>
+            <View style={{flex: .5, alignItems: 'flex-end'}}>
                 <IconButton
                     icon={edit ? "cancel" : "delete-outline"}
                     size={20}
                     onPress={edit ? CancelEdit : () => handleDelete(index)}
-                    color={Colors.iconColor}
+                    color={Colors.icon}
                 />
                 <IconButton
                     icon={edit ? "checkbox-marked-circle-outline" : "circle-edit-outline"}
                     size={20}
                     onPress={edit ? ConfirmEdit : StartEdit}
-                    color={Colors.iconColor}
+                    color={Colors.icon}
                 />
             </View>
         </View>
