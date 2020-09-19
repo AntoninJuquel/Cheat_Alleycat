@@ -7,7 +7,7 @@ const Popup = ({ style,text, visible }) => {
     return (
         <View style={style}>
             <FAB
-                style={{ backgroundColor: visible ? Colors.foreground : 'transparent' }}
+                style={{ backgroundColor: visible ? Colors.background : 'transparent' }}
                 label={text}
                 disabled
                 small
